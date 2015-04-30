@@ -1,0 +1,39 @@
+body {  
+  font-family: "Helvetica Neue", Verdana, Helvetica, Arial;  
+  font-size: 12px;  
+  margin-left: 40px;
+}
+
+.addressdiv {  
+  border-top-width: 1px;  
+  border-right-width: 1px;  
+  border-bottom-width: 1px;  
+  border-left-width: 1px;  
+  border-top-style: none;  
+  border-right-style: none;  
+  border-bottom-style: dotted;  
+  border-left-style: none;  
+  border-top-color: blue;  
+  border-right-color: blue;  
+  border-bottom-color: #466d46;  
+  border-left-color: blue;  
+  -moz-border-top-colors: none;  
+  -moz-border-right-colors: none;  
+  -moz-border-bottom-colors: none;  
+  -moz-border-left-colors: none;  -o-border-image: none;
+  -webkit-border-image: none;
+  border-image: none;  
+  margin-left: 10px;  
+  margin-top: 4px;  
+  padding-top: 3px;  
+  padding-right: 3px;  
+  padding-bottom: 3px;  
+  padding-left: 3px;  -webkit-border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.fname, .lname {  
+  font-weight: 600;  
+  color: #46008d;
+}
+

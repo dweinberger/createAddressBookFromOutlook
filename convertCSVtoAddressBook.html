@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>address book attempt</title>
+	<meta name="generator" content="BBEdit 11.0" />
+		<link type="text/css" rel="stylesheet" href="convertcsv.css">
+		<script type="text/javascript" src="includes/jquery-1.11.0.min.js"></script>
+	<script>
+	function removeQuotes(s){
+		if ((s == "") || (s == undefined)){return s;}
+		var c = s.substring(0,1);
+		if (c == '"'){
+			s= s.substring(1);
+		}
+		c = s.substring((s.length - 1),1);
+		if (c == '"'){
+			s= s.substring(s.length-1);
+		}
+		return s;
+		
+	}
+	function doIt(){ 
+		// This is the list of column names produced by the version of Outlook I used. 
+		//First Name	Last Name	Title	Suffix	Nickname	Company	Job Title	Dept	Work Street Address	Work City	Work State	Work Zip	Work Country/Region	Work URL	Home Street Address	Home City	Home State	Home Zip	Home Country/Region	Home URL	Home Phone 1	Home Phone 2	Home Fax	Work Phone 1	Work Phone 2	Work Fax	Pager	Mobile Phone	Main Phone	Assistant Phone	Custom Phone 1	Custom Phone 2	Custom Phone 3	Custom Phone 4	Email Address 1	Email Address 2	Email Address 3	Email Address 4	Email Address 5	Email Address 6	Email Address 7	Email Address 8	Email Address 9	Email Address 10	Email Address 11	Email Address 12	Email Address 13	Instant Messaging 1	Instant Messaging 2	Instant Messaging 3	Instant Messaging 4	Instant Messaging 5	Instant Messaging 6	Instant Messaging 7	Instant Messaging 8	Instant Messaging 9	Instant Messaging 10	Instant Messaging 11	Instant Messaging 12	Instant Messaging 13	Custom 1	Custom 2	Custom 3	Custom 4	Custom 5	Custom 6	Custom 7	Custom 8	Custom date 1	Custom date 2	Spouse	Birthday	Anniversary	Notes	Age	Astrology sign	Bloodtype	Furigana Company Name	Furigana First Name	Furigana Last Name	Furigana Spouse Name	Interests	Furigana Home Address line 2	Furigana Home Postal Code	Name	Category
+		// the columns we want to print. The number refers to the position of that column
+		// in the file that Outlook exports.
+		var headers = {"lname":1,"fname":0,"co":5,"workst":8,"workcity": 9,"workstate" : 10, "workzip":11,"workurl":13,"homest":14,"homecity":15,"homestate":16,"homezip":17,"homeurl":19,"homephone1":20,"homephone2":21,"mobile":27,"email1":34,"email2":35, "workphone1" : 23, "workphone2" : 24, "note":73};
+		// capture the info pasted into the box
+		var rawS = $("#csv").val();
+		// split it into lines. Each line is a contact.
+		var lines = rawS.split("\n");
+		var reviewdiv = document.getElementById("results");
+		// process the array of contact lines
+		for (var i=0; i < lines.length; i++){
+			var sarray = lines[i].split("	");
+			var newdiv = document.createElement("div");
+			newdiv.setAttribute("class","addressdiv");
+			// last name
+			var newspan = document.createElement("span");
+			var content = sarray[headers.lname];
+			$(newspan).text(content);
+			newspan.setAttribute("class","lname");
+			newdiv.appendChild(newspan);
+			// firstname
+			newspan = document.createElement("span");
+			content = sarray[headers.fname];
+			$(newspan).text(", " + content);
+			newspan.setAttribute("class","lname");
+			newdiv.appendChild(newspan);
+			// company
+			newspan = document.createElement("span");
+			content = sarray[headers.co];
+			$(newspan).text(content);
+			if (content != "") {content = " " + content;}
+			newspan.setAttribute("class","co");
+			newdiv.appendChild(newspan);
+			// home#
+			newspan = document.createElement("span");
+			content = sarray[headers.homephone1];
+			if (content != "") {content = " home: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homephone1");
+			newdiv.appendChild(newspan);
+			// mobile#
+			newspan = document.createElement("span");
+			content = sarray[headers.mobile];
+			if (content != "") {content = " cell: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","mobile");
+			newdiv.appendChild(newspan);
+			// work1#
+			newspan = document.createElement("span");
+			content = sarray[headers.workphone1];
+			if (content != "") {content = " work: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workphone");
+			newdiv.appendChild(newspan);
+			// work2#
+			newspan = document.createElement("span");
+			content = sarray[headers.workphone2];
+			if (content != "") {content = " work2: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workphone");
+			newdiv.appendChild(newspan);
+			// home2#
+			newspan = document.createElement("span");
+			content = sarray[headers.homephone2];
+			if (content != "") {content = " home2: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homephone2");
+			newdiv.appendChild(newspan);
+			// homestreet
+			newspan = document.createElement("span");
+			content = sarray[headers.homest];
+			content = removeQuotes(content);
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homest");
+			newdiv.appendChild(newspan);
+			// homecity
+			newspan = document.createElement("span");
+			content = sarray[headers.homephone2];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homecity");
+			newdiv.appendChild(newspan);
+			// homestate
+			newspan = document.createElement("span");
+			content = sarray[headers.homestate];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homestate");
+			newdiv.appendChild(newspan);
+			// homezip
+			newspan = document.createElement("span");
+			content = sarray[headers.homezip];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homezip");
+			newdiv.appendChild(newspan);
+			// workstreet
+			newspan = document.createElement("span");
+			content = sarray[headers.workst];
+			content = removeQuotes(content);
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workst");
+			newdiv.appendChild(newspan);
+			// workcity
+			newspan = document.createElement("span");
+			content = sarray[headers.workcity];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workcity");
+			newdiv.appendChild(newspan);
+			// workstate
+			newspan = document.createElement("span");
+			content = sarray[headers.workstate];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workstate");
+			newdiv.appendChild(newspan);
+			// workzip
+			newspan = document.createElement("span");
+			content = sarray[headers.workzip];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workzip");
+			newdiv.appendChild(newspan);
+			// workurl
+			newspan = document.createElement("span");
+			content = sarray[headers.workurl];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","workurl");
+			newdiv.appendChild(newspan);
+			// homeurl
+			newspan = document.createElement("span");
+			content = sarray[headers.homeurl];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","homeurl");
+			newdiv.appendChild(newspan);
+			// email1
+			newspan = document.createElement("span");
+			content = sarray[headers.email1];
+			if (content != "") {content = " " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","email");
+			newdiv.appendChild(newspan);
+			// email2
+			newspan = document.createElement("span");
+			content = sarray[headers.email2];
+			if (content != "") {content = "  " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","email");
+			newdiv.appendChild(newspan);
+			// note
+			newspan = document.createElement("span");
+			content = sarray[headers.note];
+			if (content != "") {content = "  note: " + content;}
+			$(newspan).text(content);
+			newspan.setAttribute("class","note");
+			newdiv.appendChild(newspan);
+			
+			// append the new div to the main div
+			$(reviewdiv).append(newdiv);
+				
+			}
+		}
+				
+	</script>
+</head>
+
+<body>
+
+<h1>Convert Outlook Contacts export file into an address book</h1>
+<p>This is a very quick and dirty utility for turning Outlook Contacts into an address book. You could of course just print from Outlook, but there's a bug  (at least in Outlook 2011 for Mac) that keeps it from printing the notes field.<p>
+<p>To use it, export from Outlook Contacts (File => Export) using the "Tab delimited" option. But because that will always export a list sorted by first name, if you want it sorted by last name, you're going to have to open the exported file with a spreadsheet, sort by last name, and save it as a tab-delimited CSV file. Open that file in a text editor, copy all the content and paste it into the textbox below. 
+<p>This should produce a sorted, formatted list. (To change the formatting, monkey with convertcsv.css.) Save this page and open it in an HTML editor to get rid of these instructions, etc.
+<p>It's just that easy! Sigh.
+<p>This ridiculous, kludgy piece of crap is available under an Open Source license at github. 
+<p>- David Weinberger, April 26, 2015.
+<div>
+	<textarea id="csv">Paste addresses here.</textarea>
+	<p><span id ="doitbtn" onclick="doIt()">Do it</span>
+</div>
+
+<div id="results">
+	
+</div>
+
+</body>
+</html>
